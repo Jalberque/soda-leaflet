@@ -59,7 +59,7 @@ $(document).ready(function () {
         //figure out what the date was 7 days ago
         var sevenDaysAgo = new Date();
         //sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
-        sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 21);
+        sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 20);
 
         $('#startDate').html(sevenDaysAgo.toDateString());
 

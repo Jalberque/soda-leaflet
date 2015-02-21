@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <title>Leaflet SODA API Demo</title>
   <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
+  <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
 
 </head>
 <body>
@@ -24,22 +24,23 @@
              <label>Agency</label>
              <select id = "nycAgency">
                 <option value = "All">All</option>
-                <option value = "DOT">DOT</option>
-                <option value = "TLC">TLC</option>
-                <option value = "DPR">DPR</option>
-                <option value = "DOB">DOB</option>
-                <option value = "NYPD">NYPD</option>
-                <option value = "DSNY">DSNY</option>
-                <option value = "FDNY">FDNY</option>
-                <option value = "DOE">DOE</option>
-                <option value = "DEP">DEP</option>
-                <option value = "DOF">DOF</option>
-                <option value = "DCA">DCA</option>
-                <option value = "DOHMH">DOHMH</option>
-                <option value = "HPD">HPD</option>
+                <option value= "Pothole">Pothole</option>
+                <option value= "Graffiti Removal">Graffiti</option>
+                <option value= "Sign Down">Sign Down</option>
+                <option value= "Sign Vandalized">Sign Vandalized</option>
+                <option value= "Street Light Out">Street Light Out</option>
+                <option value= "Parks / Greenways">Parks and Greenways</option>
+                <option value= "Traffic Signal Light Out">Traffic Signal</option>
+                <option value= "Sidewalks">Sidewalks</option>
+                <option value= "Garbage / Recycling / Yard Waste">Garbage/Recycle</option>
+                <option value= "Traffic Signal Malfuctioning">Traffic</option>
+                <option value= "Vandalism Repair">Vandalism</option>
+                <option value= "Vegetation Problem">Vegetation Issue</option>
+                <option value= "Visual Obstruction">Visual Obstruction</option>
+
              </select>
               <br />
-              <label>Complaint Type</label>
+              <!-- <label>Complaint Type</label>
                 <input id="conditions_list" name="conditions_list" type="text" list="conditions" />
                 <datalist  id="conditions">
                     <option value="All"></option>
@@ -162,18 +163,18 @@
                     <option value="Found Property"></option>
                     <option value="Collection Truck Noise"></option>
                     <option value="Compliment"></option>
-                </datalist>         
+                </datalist>   -->       
        </fieldset>
     </div>
   <div id = "blurbBox" class = "box">
-     <p>This example pulls the last 7 days of 311 complaints for the current map view from NYC Open Data using the SODA API.  <a href = "https://github.com/chriswhong/soda-leaflet">Code on Github</a></p>
+     <p>This example is forked from : <a href = "https://github.com/chriswhong/soda-leaflet">Code on Github</a></p>
   </div>
-  <div id="getData">
+  <<!-- div id="getData">
     <a href="https://nycopendata.socrata.com/Social-Services/311-Service-Requests-from-2010-to-Present/erm2-nwe9"><img src="https://raw.githubusercontent.com/betanyc/getDataButton/master/png/110x32.png"></a>
 
-  </div>
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>  
+  </div> -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>  
   <script src="js/script.js"></script> 
 </body>
 </html>

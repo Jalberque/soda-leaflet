@@ -3,18 +3,19 @@ $(document).ready(function () {
     var sevenDaysAgo;
     //initialize the leaflet map, set options and view
     var map = L.map('map', {
-        zoomControl: false,
-        scrollWheelZoom: false
+        //zoomControl: false,
+        //scrollWheelZoom: false
     })
-	.setView([40.705008, -73.995581], 15);
+	.setView([35.7806, -78.6389], 12);
 
     var markers = new L.FeatureGroup();
 
     //add an OSM tileset as the base layer
-    L.tileLayer('http://{s}.tile.stamen.com/watercolor/{z}/{x}/{y}.png', {
-        attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>'
-    }).addTo(map);
-
+    L.tileLayer('http://{s}.tile.stamen.com/toner/{z}/{x}/{y}.png').addTo(map);
+    //$.getJSON("data/Citizen_Advisory_Council.json", function(data) {
+    //    var geojson = L.geoJson(data);
+    // });
+    //L.geoJson('http://data.ral.opendata.arcgis.com/datasets/9a5733e13dd14e2f80f8517738ce8cc6_2.geojson').addTo(map);
     //call our getData() function.
     getData();
 
@@ -57,7 +58,8 @@ $(document).ready(function () {
 
         //figure out what the date was 7 days ago
         var sevenDaysAgo = new Date();
-        sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+        //sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+        sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 21);
 
         $('#startDate').html(sevenDaysAgo.toDateString());
 
@@ -85,8 +87,9 @@ $(document).ready(function () {
 
 			        var markerItem = L.marker([marker.location.latitude, marker.location.longitude], { icon: icon });
 			        markerItem.bindPopup(
-							'<h4>' + marker.complaint_type + '</h4>'
-							+ (new Date(marker.created_date)).toDateString()
+							'<h4>' + marker.issue_type + '</h4>'
+							+ (new Date(marker.ticket_created_date_time)).toDateString() + '<br/>'
+                            + marker.ticket_status
 							+ ((marker.incident_address != null) ? '<br/>' + marker.incident_address : '')
 						);
 			        markers.addLayer(markerItem);
@@ -98,20 +101,21 @@ $(document).ready(function () {
     }
 
     function constructQuery(sevenDaysAgo, sodaQueryBox) {
-        var originalstr = "https://data.cityofnewyork.us/resource/erm2-nwe9.json?$select=location,closed_date,complaint_type,street_name,created_date,status,unique_key,agency_name,due_date,descriptor,location_type,agency,incident_address&$where=created_date>'"
-			+ sevenDaysAgo
+        //var originalstr = "https://data.cityofnewyork.us/resource/erm2-nwe9.json?$select=location,closed_date,complaint_type,street_name,created_date,status,unique_key,agency_name,due_date,descriptor,location_type,agency,incident_address&$where=created_date>'"
+		var originalstr = "https://brigades.opendatanetwork.com/resource/dyik-sdjy.json?$select=location,ticket_closed_date_time,issue_type,ticket_created_date_time,ticket_status,ticket_id,issue_description&$where=ticket_created_date_time>'"
+        	+ sevenDaysAgo
 			+ "' AND within_box(location,"
 			+ sodaQueryBox
-			+ ")&$order=created_date desc"
+			+ ")&$order=ticket_created_date_time desc"
 
         var agency = $( "#nycAgency" ).val();
         var conditiion = $("#conditions_list").val();
         if (agency.length != 0 && agency != "All") {
-            originalstr = originalstr + "&agency=" + agency;
+            originalstr = originalstr + "&issue_type=" + agency;
         }
-        if (conditiion.length != 0 && conditiion != "All") {
-            originalstr = originalstr + "&complaint_type=" + conditiion;
-        }
+        //if (conditiion.length != 0 && conditiion != "All") {
+        //    originalstr = originalstr + "&complaint_type=" + conditiion;
+        //}
 
         console.log(originalstr);
 
@@ -119,32 +123,32 @@ $(document).ready(function () {
     }
     function getIcon(thisMarker) {
 
-        switch (thisMarker.agency) {
-            case 'TLC':
+        switch (thisMarker.issue_type) {
+            case 'Pothole':
                 return tlcIcon;
-            case 'DOT':
+            case 'Graffiti Removal':
                 return dotIcon;
-            case 'DPR':
+            case 'Sign Down':
                 return parksIcon;
-            case 'DOB':
+            case 'Sign Vandalized':
                 return buildingsIcon;
-            case 'NYPD':
+            case 'Street Light Out':
                 return nypdIcon;
-            case 'DSNY':
+            case 'Parks / Greenways':
                 return dsnyIcon;
-            case 'FDNY':
+            case 'Traffic Signal Light Out':
                 return fdnyIcon;
-            case 'DOE':
+            case 'Sidewalks':
                 return doeIcon;
-            case 'DEP':
+            case 'Garbage / Recycling / Yard Waste':
                 return depIcon;
-            case 'DOF':
+            case 'Traffic Signal Malfuctioning':
                 return dofIcon;
-            case 'DCA':
+            case 'Vandalism Repair':
                 return dcaIcon;
-            case 'DOHMH':
+            case 'Vegetation Problem':
                 return dohmhIcon;
-            case 'HPD':
+            case 'Visual Obstruction':
                 return hpdIcon;
             default:
                 return new L.Icon.Default();

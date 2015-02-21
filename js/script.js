@@ -12,7 +12,7 @@ $(document).ready(function () {
     var markers = new L.MarkerClusterGroup();
     //add an OSM tileset as the base layer
     L.tileLayer('http://{s}.tile.stamen.com/toner/{z}/{x}/{y}.png').addTo(map);
-    $.getJSON('data/Citizen_Advisory_Council.json', function(data) {
+    $.getJSON('data/council.json', function(data) {
         L.geoJson(data).addTo(map);
      });
     //L.geoJson('http://data.ral.opendata.arcgis.com/datasets/9a5733e13dd14e2f80f8517738ce8cc6_2.geojson').addTo(map);
@@ -59,7 +59,7 @@ $(document).ready(function () {
         //figure out what the date was 7 days ago
         var sevenDaysAgo = new Date();
         //sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
-        sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 21);
+        sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 20);
 
         $('#startDate').html(sevenDaysAgo.toDateString());
 
@@ -155,7 +155,6 @@ $(document).ready(function () {
                 return new L.Icon.Default();
         }
     }
-
     map.on('dragend', function (e) {
         getData();
     });

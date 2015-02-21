@@ -8,13 +8,13 @@ $(document).ready(function () {
     })
 	.setView([35.7806, -78.6389], 12);
 
-    var markers = new L.FeatureGroup();
-
+    //var markers = new L.FeatureGroup();
+    var markers = new L.MarkerClusterGroup();
     //add an OSM tileset as the base layer
     L.tileLayer('http://{s}.tile.stamen.com/toner/{z}/{x}/{y}.png').addTo(map);
-    //$.getJSON("data/Citizen_Advisory_Council.json", function(data) {
-    //    var geojson = L.geoJson(data);
-    // });
+    $.getJSON('data/Citizen_Advisory_Council.json', function(data) {
+        L.geoJson(data).addTo(map);
+     });
     //L.geoJson('http://data.ral.opendata.arcgis.com/datasets/9a5733e13dd14e2f80f8517738ce8cc6_2.geojson').addTo(map);
     //call our getData() function.
     getData();
@@ -76,9 +76,10 @@ $(document).ready(function () {
 
         //use jQuery's getJSON() to call the SODA API for NYC 311
         //concatenate sodaQueryBox and sevenDaysAgo to add a $where clause to the SODA endpoint
+        
         $.getJSON(constructQuery(sevenDaysAgo, sodaQueryBox), function (data) {
 
-                console.log(data)
+                //console.log(data)
 			    //iterate over each 311 complaint, add a marker to the map
 			    for (var i = 0; i < data.length; i++) {
 
